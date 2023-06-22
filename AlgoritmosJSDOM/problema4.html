@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bold-red{
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- AÑADIR ETIQUETAS <br> POR CADA SALTO DE LINEA EN EL TEXTO CONTENIDO EN EL ELEMENTO <pre> DESDE JAVASCRIPT-->
+        <!-- SI UNA LINEA DE TEXTO ESTA COMPLETAMENTE EN BLANCO, ENTONCES ELIMINAR ESA LINEA DE TEXTO DESDE JAVASCRIPT -->
+        <!-- REEMPLAZAR EL ELEMENTO <pre> POR EL ELEMENTO <p> DESDE JAVASCRIPT -->
+        <!-- AÑADIR UN ATRIBUTO class CON EL VALOR "bold-red" AL NUEVO ELEMENTO <p> DESDE JAVASCRIPT -->
+        <!-- COLOCAR EL ATRIBUTO id CON EL MISMO VALOR DEL ELEMENTO <pre> AL NUEVO ELEMENTO <p> LUEGO DE LAS MODIFICACIONES DESDE JAVASCRIPT-->
+        <pre id="cajatexto">
+            parrafo 1
+            parrafo 2
+            parrafo 3
+
+            parrafo 4
+        </pre>
+    </div>
+
+    <script>
+
+        // 1) window.addEventListener('DOMContentLoaded', function() { ... });: Establece un evento que se activa cuando el contenido de la página HTML se ha cargado completamente en el navegador, como hemos visto anteriormente.
+            window.addEventListener('DOMContentLoaded', function() {
+
+            // 2) var preElement = document.getElementById('cajatexto');: Busca el elemento con el id "cajatexto" en el documento HTML y lo asigna a la variable preElement. Es un elemento <pre> en este caso.
+            var preElement = document.getElementById('cajatexto');
+
+            // 3) var idValue = preElement.id;: Almacena el valor del atributo id del elemento <pre> en la variable idValue para mantener el mismo id en el nuevo elemento <p>.
+            var idValue = preElement.id;
+
+            // 4) var pElement = document.createElement('p');: Crea un nuevo elemento <p> utilizando el método createElement('p') y lo asigna a la variable pElement.
+            var pElement = document.createElement('p');
+            
+            // 5) pElement.classList.add('bold-red');: Agrega la clase 'bold-red' al nuevo elemento <p> utilizando el método classList.add('bold-red'), como hemos hecho anteriormente.
+            pElement.classList.add('bold-red');
+
+            // 6) var text = preElement.textContent.trim();: Obtiene el contenido de texto del elemento <pre> (preElement.textContent) y elimina los espacios en blanco iniciales y finales utilizando el método trim(). El texto se asigna a la variable text.
+            var text = preElement.textContent.trim();
+
+            // 7) var lines = text.split('\n');: Divide el texto en líneas individuales utilizando el carácter de nueva línea (\n) como separador. Las líneas se almacenan en la variable lines.
+            var lines = text.split('\n');
+
+            // 8) var filteredLines = lines.filter(function(line) { return line.trim() !== ''; });: Filtra las líneas para eliminar aquellas que están completamente en blanco. Se utiliza el método filter() y una función de devolución de llamada para verificar si una línea, después de eliminar los espacios en blanco iniciales y finales, no es una cadena vacía. Las líneas filtradas se almacenan en la variable filteredLines.
+            var filteredLines = lines.filter(function(line) {
+                return line.trim() !== '';
+            });
+
+            // 9) pElement.innerHTML = filteredLines.join('<br>');: Establece el contenido HTML del nuevo elemento <p> (pElement) utilizando la propiedad innerHTML. Las líneas filtradas se unen en una sola cadena utilizando el carácter <br> como separador. Esto crea etiquetas <br> entre cada línea.
+            pElement.innerHTML = filteredLines.join('<br>');
+
+            // 10) preElement.parentNode.replaceChild(pElement, preElement);: Reemplaza el elemento <pre> con el nuevo elemento <p> en la estructura del DOM utilizando el método replaceChild(pElement, preElement) en el padre del elemento <pre> (preElement.parentNode).
+            preElement.parentNode.replaceChild(pElement, preElement);
+            
+            // 11) pElement.id = idValue;: Asigna el valor almacenado en la variable idValue al atributo id del nuevo elemento <p>. Esto garantiza que el nuevo elemento tenga el mismo id que el elemento original.
+            pElement.id = idValue;
+
+        });
+
+        // --> En resumen, el código JavaScript espera a que todo el contenido HTML se haya cargado y realiza los siguientes pasos: busca el elemento <pre>, crea un nuevo elemento <p>, le agrega la clase 'bold-red', procesa el texto del elemento <pre> eliminando las líneas en blanco, crea un nuevo contenido HTML con etiquetas <br> entre las líneas restantes, reemplaza el elemento <pre> con el nuevo elemento <p>, y finalmente asigna el mismo id al nuevo elemento. Esto logra el efecto de reemplazar el elemento <pre> por un nuevo elemento <p> con los estilos CSS aplicados, sin líneas en blanco y con saltos de línea convertidos en etiquetas <br>.
+
+    </script>
+    
+</body>
+</html>

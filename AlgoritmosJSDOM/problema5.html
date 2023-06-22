@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .big-text{
+            font-size: 20px;
+        }
+        .bold-red{
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- AÑADIR UNAS ETIQUETAS <li></li> QUE VA A CONTENER UNA LINEA DE TEXTO CONTENIDA EN EL ELEMENTO <pre> DESDE JAVASCRIPT-->
+        <!-- SI UNA LINEA DE TEXTO ESTA COMPLETAMENTE EN BLANCO, ENTONCES NO AÑADIR UNAS ETIQUETAS <li></li> PARA ESA LINEA Y ELIMINARLO DESDE JAVASCRIPT -->
+        <!-- REEMPLAZAR EL ELEMENTO <pre> POR EL ELEMENTO <ul> DESDE JAVASCRIPT -->
+        <!-- AÑADIR UN ATRIBUTO class CON EL VALOR "bold-red" AL NUEVO ELEMENTO <ul> DESDE JAVASCRIPT -->
+        <!-- COLOCAR EL ATRIBUTO id CON EL MISMO VALOR DEL ELEMENTO <pre> AL NUEVO ELEMENTO <ul> LUEGO DE LAS MODIFICACIONES DESDE JAVASCRIPT-->
+        <!-- COLOCAR EL ATRIBUTO class CON EL MISMO VALOR DEL ELEMENTO <pre> AL NUEVO ELEMENTO <ul>, CONSERVANDO EL ATRIBUTO "bold-red" DESDE JAVASCRIPT -->
+        <pre id="cajatexto" class="big-text">
+            parrafo 1
+            parrafo 2
+            parrafo 3
+
+            parrafo 4
+        </pre>
+    </div>
+    
+    <script>
+        // 1) window.addEventListener('DOMContentLoaded', function() { ... });: Establece un evento que se activa cuando todo el contenido HTML se ha cargado en el navegador.
+        window.addEventListener('DOMContentLoaded', function() {
+
+            // 2) var preElement = document.getElementById('cajatexto');: Obtiene el elemento con el id "cajatexto" del documento y lo asigna a la variable preElement. En este caso, es un elemento <pre>.
+            var preElement = document.getElementById('cajatexto');
+
+            // 3) var idValue = preElement.id;: Almacena el valor del atributo id del elemento <pre> en la variable idValue.
+            var idValue = preElement.id;
+
+            // 4) var ulElement = document.createElement('ul');: Crea un nuevo elemento <ul> utilizando el método createElement('ul') y lo asigna a la variable ulElement.
+            var ulElement = document.createElement('ul');
+
+            // 5) ulElement.classList.add('bold-red');: Agrega la clase CSS 'bold-red' al elemento <ul> utilizando el método classList.add('bold-red').
+            ulElement.classList.add('bold-red');
+
+            // 6) ulElement.classList.add(preElement.getAttribute('class'));: Agrega la clase CSS del elemento <pre> al elemento <ul>. Esto se logra utilizando el método getAttribute('class') para obtener el valor del atributo class del elemento <pre> y luego agregándolo al elemento <ul> utilizando classList.add().
+            ulElement.classList.add(preElement.getAttribute('class'));
+
+            // 7) var text = preElement.textContent.trim();: Obtiene el contenido de texto del elemento <pre> y elimina los espacios en blanco iniciales y finales utilizando el método trim(). El texto resultante se almacena en la variable text.
+            var text = preElement.textContent.trim();
+
+            // 8) var lines = text.split('\n');: Divide el texto en líneas individuales utilizando el carácter de nueva línea (\n) como separador. Las líneas resultantes se almacenan en la variable lines.
+            var lines = text.split('\n');
+
+            // 9) lines.forEach(function(line) { ... });: Itera sobre cada línea utilizando el método forEach(). Para cada línea, se ejecuta una función de devolución de llamada que toma la línea actual como argumento y realiza las siguientes acciones:
+            lines.forEach(function(line) {
+
+                // 9.a) var trimmedLine = line.trim();: Elimina los espacios en blanco iniciales y finales de la línea y almacena el resultado en la variable trimmedLine.
+                var trimmedLine = line.trim();
+
+                // 9.b) if (trimmedLine !== '') { ... }: Verifica si la línea no está vacía.
+                if (trimmedLine !== '') {
+
+                    // 9.b.1) var liElement = document.createElement('li');: Crea un nuevo elemento <li> utilizando el método createElement('li') y lo asigna a la variable liElement.
+                    var liElement = document.createElement('li');
+
+                    // 9.b.2) liElement.textContent = trimmedLine;: Establece el contenido de texto del elemento <li> con la línea actual (sin espacios en blanco) utilizando la propiedad textContent.
+                    liElement.textContent = trimmedLine;
+
+                    // 9.c.3) ulElement.appendChild(liElement);: Agrega el elemento <li> como hijo del elemento <ul> utilizando el método appendChild().
+                    ulElement.appendChild(liElement);
+
+                }
+
+            });
+
+            // 10) preElement.parentNode.replaceChild(ulElement, preElement);: Reemplaza el elemento <pre> con el elemento <ul> en el árbol DOM. Esto se logra utilizando el método replaceChild() del nodo padre del elemento <pre>. El nuevo elemento <ul> reemplaza al elemento <pre>.
+            preElement.parentNode.replaceChild(ulElement, preElement);
+
+            // 11) ulElement.id = idValue;: Asigna el valor de idValue (el atributo id original del elemento <pre>) al atributo id del nuevo elemento <ul>.
+            ulElement.id = idValue;
+
+        });
+
+        // --> En resumen, el código JavaScript espera a que todo el contenido HTML se haya cargado, realiza varias transformaciones en el elemento <pre>, crea un nuevo elemento <ul> con las líneas no vacías como elementos de lista (<li>), reemplaza el elemento <pre> con el nuevo elemento <ul> y conserva los atributos id y class del elemento original.
+
+    </script>
+
+</body>
+</html>

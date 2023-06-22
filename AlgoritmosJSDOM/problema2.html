@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bold-red{
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- REEMPLAZAR EL ELEMENTO <pre> POR EL ELEMENTO <p> DESDE JAVASCRIPT -->
+        <!-- AÑADIR UN ATRIBUTO class CON EL VALOR "bold-red" AL NUEVO ELEMENTO <p> DESDE JAVASCRIPT -->
+        <pre id="cajatexto">
+            parrafo 1
+            parrafo 2
+            parrafo 3
+        </pre>
+    </div>
+    
+    <script>
+
+        // 1) window.addEventListener('DOMContentLoaded', function() { ... });: Esto establece un evento que se activa cuando el contenido de la página HTML se ha cargado completamente en el navegador, al igual que en el ejemplo anterior.
+        window.addEventListener('DOMContentLoaded',function(){
+
+            // 2) var preElement = document.getElementById('cajatexto');: Aquí se busca el elemento con el id "cajatexto" en el documento HTML y se asigna a la variable preElement. En este caso, se trata de un elemento <pre>.
+            var preElement = document.getElementById('cajatexto'); 
+
+            // 3) var pElement = document.createElement('p');: Esta línea crea un nuevo elemento <p> utilizando el método createElement('p'). El elemento creado se asigna a la variable pElement.
+            var pElement = document.createElement('p');
+
+            // 4) pElement.textContent = preElement.textContent;: Aquí se copia el contenido de texto del elemento <pre> (preElement) y se asigna como contenido de texto del elemento <p> (pElement). Esto asegura que el contenido de texto se mantenga igual en el nuevo elemento.
+            pElement.textContent = preElement.textContent;
+
+            // 5) pElement.classList.add('bold-red');: Se agrega la clase 'bold-red' al nuevo elemento <p> (pElement) utilizando el método classList.add('bold-red'). Esto aplica los estilos CSS definidos en la clase, es decir, el texto será en negrita y de color rojo.
+            pElement.classList.add('bold-red');
+
+            // 6) preElement.parentNode.replaceChild(pElement, preElement);: En esta línea, se accede al padre del elemento <pre> (preElement) mediante la propiedad parentNode. Luego se utiliza el método replaceChild(pElement, preElement) para reemplazar el elemento <pre> con el nuevo elemento <p>. Esto significa que el elemento <p> tomará el lugar del elemento <pre> en la estructura del DOM.
+            preElement.parentNode.replaceChild(pElement, preElement);
+            
+        });
+
+        // --> En resumen, el código JavaScript espera a que todo el contenido HTML se haya cargado y luego realiza los siguientes pasos: busca el elemento <pre>, crea un nuevo elemento <p> con el mismo contenido de texto, le agrega la clase 'bold-red', y finalmente reemplaza el elemento <pre> con el nuevo elemento <p>. Esto logra el efecto de reemplazar el elemento <pre> por un elemento <p> con los estilos CSS aplicados.
+
+    </script>
+    
+</body>
+</html>

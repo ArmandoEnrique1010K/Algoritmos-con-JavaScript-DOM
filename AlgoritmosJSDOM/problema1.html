@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bold-red{
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- AÑADIR UN ATRIBUTO class CON EL VALOR "bold-red" AL ELEMENTO <pre> DESDE JAVASCRIPT -->
+        <pre id="cajatexto">
+            parrafo 1
+            parrafo 2
+            parrafo 3
+        </pre>
+    </div>
+
+    <script>
+
+        // 1) window.addEventListener('DOMContentLoaded', function() { ... });: Esto establece un evento que se activa cuando el contenido de la página HTML se ha cargado completamente en el navegador. Es decir, cuando todos los elementos del DOM (Document Object Model) están listos para ser manipulados.
+        window.addEventListener('DOMContentLoaded', function() {
+
+            // 2) var preElement = document.getElementById('cajatexto');: Esta línea busca en el documento HTML un elemento con el atributo id igual a 'cajatexto'. En este caso, se está buscando un elemento <pre> con el id igual a 'cajatexto'. El resultado de esta búsqueda se asigna a la variable preElement.
+            var preElement = document.getElementById('cajatexto');
+
+            // 3) preElement.classList.add('bold-red');: Aquí se accede a la propiedad classList del elemento preElement, que representa la lista de clases CSS asociadas a ese elemento. Se utiliza el método add('bold-red') para añadir la clase 'bold-red' a la lista de clases del elemento. Esta clase define estilos CSS que hacen que el texto sea en negrita y de color rojo.
+            preElement.classList.add('bold-red');
+
+        });
+
+        // --> En resumen, el código JavaScript espera a que todo el contenido HTML se haya cargado y luego busca el elemento con el id "cajatexto". Después, agrega la clase 'bold-red' a ese elemento, lo que hace que el texto dentro del elemento <pre> tenga estilo en negrita y sea de color rojo.
+            
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .big-text{
+            font-size: 20px;
+        }
+        .red-text{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- AÑADIR UNAS ETIQUETAS <li></li> QUE VA A CONTENER UNA LINEA DE TEXTO CONTENIDA EN EL ELEMENTO <pre> DESDE JAVASCRIPT-->
+        <!-- COLOCAR CADA LINEA DE TEXTO EN NEGRITA DESDE EL INICIO DE UNA LINEA, HASTA ENCONTRAR EL PRIMER CARACTER DOS PUNTOS (:) DE ESA LINEA DE TEXTO (TAMBIEN INCLUIR LOS DOS PUNTOS EN NEGRITA) DESDE JAVASCRIPT -->
+        <!-- SI UNA LINEA DE TEXTO ESTA COMPLETAMENTE EN BLANCO, ENTONCES NO AÑADIR UNAS ETIQUETAS <li></li> PARA ESA LINEA Y ELIMINARLO DESDE JAVASCRIPT -->
+        <!-- REEMPLAZAR EL ELEMENTO <pre> POR EL ELEMENTO <ul> DESDE JAVASCRIPT -->
+        <!-- AÑADIR UN ATRIBUTO class CON EL VALOR "red-text" AL NUEVO ELEMENTO <ul> DESDE JAVASCRIPT -->
+        <!-- COLOCAR EL ATRIBUTO id CON EL MISMO VALOR DEL ELEMENTO <pre> AL NUEVO ELEMENTO <ul> LUEGO DE LAS MODIFICACIONES DESDE JAVASCRIPT-->
+        <!-- COLOCAR EL ATRIBUTO class CON EL MISMO VALOR DEL ELEMENTO <pre> AL NUEVO ELEMENTO <ul>, CONSERVANDO EL ATRIBUTO "red-text" DESDE JAVASCRIPT -->
+        <pre id="cajadetexto" class="big-text">
+            parrafo: este es un parrafo
+            parrafo 2: este es un parrafo
+            parrafo tres: este es el parrafo #3
+            parrafo #4: este es el parrafo: 4 de 4
+        </pre>
+    </div>
+    
+    <script>
+        // 1) window.addEventListener('DOMContentLoaded', function() { ... });: Escucha el evento DOMContentLoaded que se dispara cuando todo el contenido HTML de la página se ha cargado. La función proporcionada se ejecutará cuando ocurra este evento.
+        window.addEventListener('DOMContentLoaded', function() {
+
+            // 2) var preElement = document.getElementById('cajadetexto');: Obtiene el elemento con el ID "cajadetexto" utilizando getElementById() y lo asigna a la variable preElement.
+            var preElement = document.getElementById('cajadetexto');
+
+            // 3) var idValue = preElement.id;: Almacena el valor del atributo id del elemento <pre> en la variable idValue.
+            var idValue = preElement.id;
+
+            // 4) var ulElement = document.createElement('ul');: Crea un nuevo elemento <ul> utilizando createElement() y lo asigna a la variable ulElement.
+            var ulElement = document.createElement('ul');
+
+            // 5) ulElement.classList.add('red-text');: Agrega la clase CSS "red-text" al elemento <ul> utilizando classList.add().
+            ulElement.classList.add('red-text');
+
+            // 6) ulElement.classList.add(preElement.getAttribute('class'));: Agrega la clase CSS del elemento <pre> al elemento <ul> utilizando getAttribute() para obtener el valor del atributo class.
+            ulElement.classList.add(preElement.getAttribute('class'));
+            
+            // 7) var text = preElement.textContent.trim();: Obtiene el contenido de texto del elemento <pre> utilizando la propiedad textContent y luego elimina los espacios en blanco iniciales y finales utilizando trim(). Esto almacenará el texto sin espacios adicionales.
+            var text = preElement.textContent.trim();
+
+            // 8) var lines = text.split('\n');: Divide el texto en líneas utilizando el carácter de salto de línea \n como separador y almacena las líneas en el arreglo lines.
+            var lines = text.split('\n');
+
+            // 9) lines.forEach(function(line) { ... });: Itera sobre cada línea en el arreglo lines utilizando forEach() y ejecuta una función para cada línea.
+            lines.forEach(function(line) {
+
+                // 9.a) var trimmedLine = line.trim();: Elimina los espacios en blanco iniciales y finales de la línea utilizando trim() y almacena la línea resultante en la variable trimmedLine.
+                var trimmedLine = line.trim();
+
+                // 9.b) if (trimmedLine !== '') { ... }: Verifica si la línea no está vacía. Si la línea está vacía, se omiten los siguientes pasos y pasa a la siguiente iteración del bucle.
+                if (trimmedLine !== '') {
+
+                    // 9.b.1) var liElement = document.createElement('li');: Crea un nuevo elemento <li> utilizando createElement() y lo asigna a la variable liElement.
+                    var liElement = document.createElement('li');
+
+                    // 9.b.2) var colonIndex = trimmedLine.indexOf(':');: Busca el índice del primer carácter ":" en la línea utilizando indexOf() y lo almacena en la variable colonIndex.
+                    var colonIndex = trimmedLine.indexOf(':');
+
+                    // 9.b.3) if (colonIndex !== -1) { ... }: Verifica si se encontró el carácter ":" en la línea. Si se encuentra, se ejecuta el siguiente bloque de código.
+                    if (colonIndex !== -1) {
+
+                        // 9.b.3.a) var boldPart = document.createElement('strong');: Crea un nuevo elemento <strong> utilizando createElement() y lo asigna a la variable boldPart.
+                        var boldPart = document.createElement('strong');
+
+                        // 9.b.3.b) boldPart.textContent = trimmedLine.substring(0, colonIndex + 1);: Establece el contenido de texto del elemento <strong> como la parte de la línea desde el inicio hasta el carácter ":" (incluyendo el ":"). Se utiliza substring() para extraer esa parte de la línea.
+                        boldPart.textContent = trimmedLine.substring(0, colonIndex + 1);
+
+                        // 9.b.3.c) liElement.appendChild(boldPart);: Agrega el elemento <strong> como hijo del elemento <li> utilizando appendChild().
+                        liElement.appendChild(boldPart);
+
+                        // 9.b.3.d) liElement.innerHTML += trimmedLine.substring(colonIndex + 1);: Agrega el contenido de texto restante de la línea después del carácter ":" (excluyendo el ":") al contenido HTML del elemento <li> utilizando innerHTML.
+                        liElement.innerHTML += trimmedLine.substring(colonIndex + 1);
+
+                    // 9.b.4) else { liElement.textContent = trimmedLine; }: Si no se encuentra el carácter ":" en la línea, se establece el contenido de texto completo de la línea en el elemento <li> utilizando textContent.
+                    } else {
+                        liElement.textContent = trimmedLine;
+                    }
+
+                    // 9.b.5) ulElement.appendChild(liElement);: Agrega el elemento <li> como hijo del elemento <ul> utilizando appendChild().
+                    ulElement.appendChild(liElement);
+                }
+            });
+            // 10) preElement.parentNode.replaceChild(ulElement, preElement);: Reemplaza el elemento <pre> con el elemento <ul> en el DOM. Utiliza replaceChild() en el padre del elemento <pre> para realizar el reemplazo.
+            preElement.parentNode.replaceChild(ulElement, preElement);
+
+            // 11) ulElement.id = idValue;: Establece el atributo id del elemento <ul> con el mismo valor que el atributo id original del elemento <pre>, utilizando la variable idValue.
+            ulElement.id = idValue;
+        });
+
+        // --> Con estos pasos, se logra la manipulación del DOM deseada, agregando las etiquetas <li> para cada línea de texto, colocando en negrita la parte de texto antes del carácter de dos puntos (si existe), y reemplazando el elemento <pre> por un elemento <ul> con las clases correspondientes.
+
+    </script>
+
+</body>
+</html>
